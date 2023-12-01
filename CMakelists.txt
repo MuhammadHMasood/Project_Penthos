@@ -1,0 +1,42 @@
+cmake_minimum_required(VERSION 3.10)
+
+# Set the project name and version
+project(MyProject VERSION 1.0)
+
+# Set directory for output file
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
+# Specify the C++ standard
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+
+# Include directories
+include_directories(lib/)
+include_directories(src/)
+
+# Explicitly list your source files
+set(SOURCES
+    src/main.cpp
+    src/cartesianpoint.cpp
+    # Add new .cpp files here as you create them
+)
+
+# Define the executable
+add_executable(Project_Penthos ${SOURCES})
+
+# Linking Libraries for macOS
+if(APPLE)
+    target_link_libraries(Project_Penthos
+        "-framework CoreVideo"
+        "-framework IOKit"
+        "-framework Cocoa"
+        "-framework GLUT"
+        "-framework OpenGL"
+        "${CMAKE_SOURCE_DIR}/lib/raylib/libraylib.a"
+    )
+endif()
+
+# For non-Apple platforms, link other necessary libraries
+if(NOT APPLE)
+    # Example: target_link_libraries(MyApp other_libraries_here)
+endif()
